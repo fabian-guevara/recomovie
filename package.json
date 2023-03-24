@@ -1,0 +1,35 @@
+{
+  "name": "recomovie",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "reco": "node index.js",
+    "dev": "nodemon index.js -interactive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabian-guevara/recomovie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabian-guevara/recomovie/issues"
+  },
+  "homepage": "https://github.com/fabian-guevara/recomovie#readme",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "chai": "^4.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "enquirer": "^2.3.6",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
