@@ -24,13 +24,6 @@ class GenreController extends BaseController{
         })
     }
 
-    async getMoviesWithFilter(id, page = 1, year) {
-        
-        const params = [`with_genres=${id}`, `page=${page}`, `year=${year}`];
-        const response = await this.fire(`https://api.themoviedb.org/3/discover/movie`, params);
-        return response.data.results
-    }
-
 }
 
 export default GenreController;

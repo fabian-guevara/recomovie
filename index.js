@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 import {Select}  from "./helpers/logger.js";
 import GenreController from "./controllers/GenreController.js";    
+import MovieController from "./controllers/MovieController.js";
 const currentYear = new Date().getFullYear();
-
+const back = "Back";
 
 const genreController =  new GenreController();
+const movieController = new MovieController();
 
 const genreArray = await genreController.parseDataForEnquirer();
 
@@ -37,7 +39,7 @@ const timePreference = await getTimePreference.run();
 const year = timePreferenceChoices.find(choice => choice.name === timePreference).value;
 
 const getMoviesRec = async (genreId, page = 1, year) => {
-    const response = await genreController.getMoviesWithFilter(genreId, page, year);
+    const response = await movieController.getMoviesWithFilter(genreId, page, year);
     const movies = response.map(movie => movie.title);
     const nextChoice = "Next Page";
     const getMovie = new Select({
@@ -50,10 +52,22 @@ const getMoviesRec = async (genreId, page = 1, year) => {
         getMoviesRec(genreId, page + 1, year)
     }
     else {
-        return movie;
-    }
+        
+            const movieDetails = await movieController.getMovieByTitle(movie);
+            const { title, overview, vote_average } = movieDetails;
+
+            const movieDetailsPrompt = new Select({
+                name: "Details",
+                message: `${title}\n ${overview} \n${vote_average}`,
+                choices: [back],
+            })
+
+            const goBack = await movieDetailsPrompt.run();
+
+            if(goBack) {
+                getMoviesRec(genreId, page, year);
+            }
+        }
 }
 
-const movie = await getMoviesRec(genreId, 1, year);
-
-console.log(movie);
+await getMoviesRec(genreId, 1, timePreference)
